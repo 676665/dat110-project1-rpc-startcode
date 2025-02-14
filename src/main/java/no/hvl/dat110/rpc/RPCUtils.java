@@ -8,14 +8,13 @@ public class RPCUtils {
 	
 	public static byte[] encapsulate(byte rpcid, byte[] payload) {
 		
-		byte[] rpcmsg = null;
-		
 		// TODO - START
 		
+		byte[] rpcmsg = new byte[payload.length + 1];
+
 		// Encapsulate the rpcid and payload in a byte array according to the RPC message syntax / format
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		rpcmsg[0] = rpcid;
+		System.arraycopy(payload, 0, rpcmsg, 1, payload.length);
 		
 		// TODO - END
 		
@@ -24,14 +23,12 @@ public class RPCUtils {
 	
 	public static byte[] decapsulate(byte[] rpcmsg) {
 		
-		byte[] payload = null;
-		
 		// TODO - START
 		
-		// Decapsulate the rpcid and payload in a byte array according to the RPC message syntax
+		byte[] payload = new byte[rpcmsg.length - 1];
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		// Decapsulate the rpcid and payload in a byte array according to the RPC message syntax
+		System.arraycopy(rpcmsg, 1, payload, 0, payload.length);
 		
 		// TODO - END
 		
@@ -41,56 +38,20 @@ public class RPCUtils {
 
 	// convert String to byte array
 	public static byte[] marshallString(String str) {
-		
-		byte[] encoded = null;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
-		return encoded;
+		return str.getBytes();
 	}
 
 	// convert byte array to a String
 	public static String unmarshallString(byte[] data) {
-		
-		String decoded = null; 
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
-		return decoded;
+		return new String(data);
 	}
 	
 	public static byte[] marshallVoid() {
-		
-		byte[] encoded = null;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-				
-		// TODO - END
-		
-		return encoded;
-		
+		return new byte[0];
 	}
 	
 	public static void unmarshallVoid(byte[] data) {
-		
-		// TODO
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		// No action needed
 	}
 
 	// convert boolean to a byte array representation
@@ -118,12 +79,14 @@ public class RPCUtils {
 	// integer to byte array representation
 	public static byte[] marshallInteger(int x) {
 		
-		byte[] encoded = null;
+		byte[] encoded = new byte[4];
 		
 		// TODO - START 
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		encoded[0] = (byte)(x >> 24); // Highest byte
+		encoded[1] = (byte)(x >> 16); 
+		encoded[2] = (byte)(x >> 8);
+		encoded[3] = (byte)x; // Lowest byte
 		
 		// TODO - END
 		
@@ -133,12 +96,10 @@ public class RPCUtils {
 	// byte array representation to integer
 	public static int unmarshallInteger(byte[] data) {
 		
-		int decoded = 0;
-		
 		// TODO - START 
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		int decoded = ((data[0] & 0xFF) >> 24) | (data[1] & 0xFF >> 16) |
+					   (data[2] & 0xFF >> 8) | (data[3] & 0xFF);
 		
 		// TODO - END
 		

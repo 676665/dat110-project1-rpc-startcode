@@ -12,8 +12,12 @@ public class Message {
 		
 		// TODO - START
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
+		if (data == null || data.length > 127 ) {
+			throw new UnsupportedOperationException(TODO.constructor
+					("Cannot be null or more than 127 bytes"));			
+		}
+		
+		this.data = data;
 			
 		// TODO - END
 	}
@@ -21,5 +25,4 @@ public class Message {
 	public byte[] getData() {
 		return this.data; 
 	}
-
 }
